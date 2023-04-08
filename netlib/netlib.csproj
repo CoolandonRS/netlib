@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>netlib</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Update="ServerAuthException.cs">
+        <DependentUpon>ServerException.cs</DependentUpon>
+      </Compile>
+      <Compile Update="ServerConnectionException.cs">
+        <DependentUpon>ServerException.cs</DependentUpon>
+      </Compile>
+      <Compile Update="ServerOperationException.cs">
+        <DependentUpon>ServerException.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="keyring" Version="1.0.0" />
+    </ItemGroup>
+
+</Project>
