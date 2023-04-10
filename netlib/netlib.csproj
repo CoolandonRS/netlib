@@ -2,9 +2,17 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <RootNamespace>netlib</RootNamespace>
+        <RootNamespace>CoolandonRS.netlib</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>NetLib</Title>
+        <Authors>CoolandonRS</Authors>
+        <Description>C# Library for various networking purposes</Description>
+        <RepositoryUrl>https://github.com/CoolandonRS/netlib</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <Version>1.0.0-beta</Version>
+        <PackageId>CoolandonRS.netlib</PackageId>
     </PropertyGroup>
 
     <ItemGroup>

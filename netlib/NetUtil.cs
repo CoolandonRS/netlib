@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace netlib; 
+namespace CoolandonRS.netlib; 
 
 public static class NetUtil {
     private static SHA256 sha = SHA256.Create();

@@ -1,4 +1,4 @@
-﻿namespace netlib;
+﻿namespace CoolandonRS.netlib;
 
 /// <summary>
 /// A container for a Semantic Version consisting of three numbers. <br/><br/>

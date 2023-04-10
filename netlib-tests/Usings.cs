@@ -1,2 +1,2 @@
 global using NUnit.Framework;
-global using netlib;
+global using CoolandonRS.netlib;

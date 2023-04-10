@@ -1,4 +1,4 @@
-﻿namespace netlib; 
+﻿namespace CoolandonRS.netlib; 
 
 public class ServerConnectionException : ServerException {
     public ServerConnectionException() {

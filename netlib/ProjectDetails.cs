@@ -3,7 +3,7 @@
 // Only for json use, not needed
 #pragma warning disable CS8618 
 
-namespace netlib; 
+namespace CoolandonRS.netlib; 
 
 public class ProjectDetails {
     [JsonInclude] public readonly string Ver;
