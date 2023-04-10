@@ -28,7 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="keyring" Version="1.0.0" />
+      <PackageReference Include="CoolandonRS.keyring" Version="1.0.0" />
     </ItemGroup>
 
 </Project>
