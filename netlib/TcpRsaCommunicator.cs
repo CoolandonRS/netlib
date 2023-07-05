@@ -13,11 +13,13 @@ public class TcpRsaCommunicator : TcpCommunicator {
     protected readonly (RSAUtil recieve, RSAUtil send) rsaKeys;
 
     /// <summary>
-    /// <b> Cannot be used in TcpRsaCommunicator! <br/>
-    /// Use <see cref="ReadRawN"/> instead! </b>
+    /// Reads len bytes raw, then decrypts them
     /// </summary>
+    /// <param name="len">Quantity of bytes to read</param>
+    /// <returns>Read bytes</returns>
     public new byte[] ReadN(int len) {
-        throw new InvalidOperationException();
+        AssertNotClosed();
+        return rsaKeys.recieve.Decrypt(ReadRawN(len));
     }
 
     /// <summary>
