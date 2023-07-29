@@ -7,7 +7,7 @@ namespace CoolandonRS.netlib;
 /// Communicates with a TcpClient
 /// </summary>
 public class TcpCommunicator {
-    protected readonly TcpClient client;
+    protected internal readonly TcpClient client;
     protected readonly NetworkStream stream;
     protected readonly Encoding encoding;
     protected readonly int maxStrLen;
@@ -32,7 +32,7 @@ public class TcpCommunicator {
     /// <returns>Read string</returns>
     public string ReadStr() {
         AssertNotClosed();
-        return encoding.GetString(ReadN(maxStrLen)).Replace("\0", "");
+        return encoding.GetString(ReadN(maxStrLen)).Trim('\0');
     }
 
     /// <summary>
@@ -69,9 +69,9 @@ public class TcpCommunicator {
         this.closed = true;
     }
 
-    public bool IsClosed() {
-        return closed;
-    }
+    public bool IsClosed() => closed;
+
+    public Encoding GetEncoding() => encoding;
 
     public TcpCommunicator(TcpClient client, Encoding? encoding = null, int maxStrLen = 1024) {
         this.client = client;

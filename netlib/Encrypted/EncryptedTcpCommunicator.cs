@@ -1,26 +1,35 @@
 ﻿using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
-using keyring;
+using CoolandonRS.keyring;
 
-namespace CoolandonRS.netlib; 
+namespace CoolandonRS.netlib.Encrypted; 
 
 /// <summary>
-/// Communicates with a TcpClient using RSA and keyring. <br/>
+/// Communicates with a TcpClient encrypted messaging. <br/>
 /// <b>NOTE:</b> Still retains all functionality of <see cref="TcpCommunicator"/>, but with the "Raw" keyword. <br/>
-/// The normal methods are overriden to use RSA/keyring instead.
+/// The normal methods are overriden to use encryption instead.
 /// </summary>
-public class TcpRsaCommunicator : TcpCommunicator {
-    protected readonly (RSAUtil recieve, RSAUtil send) rsaKeys;
+public class EncryptedTcpCommunicator : TcpCommunicator {
+    protected UtilHolder util;
 
     /// <summary>
-    /// Reads len bytes raw, then decrypts them
+    /// Reads the length of the encrypted data, then raw length bytes, then decrypts them.
     /// </summary>
-    /// <param name="len">Quantity of bytes to read</param>
     /// <returns>Read bytes</returns>
-    public new byte[] ReadN(int len) {
+    public byte[] Read() {
         AssertNotClosed();
-        return rsaKeys.recieve.Decrypt(ReadRawN(len));
+        var l = int.Parse(ReadStr());
+        return util.Decrypt(ReadRawN(l));
     }
+
+    /// <summary>
+    /// Reads the desired length of bytes from the stream, then truncates it to the desired size.
+    /// </summary>
+    /// <param name="len"></param>
+    /// <returns></returns>
+    [Obsolete("Use \"Read()\" instead to avoid truncation. Desired length is communicated automatically.")] 
+    public new byte[] ReadN(int len) => Read()[..(len + 1)];
 
     /// <summary>
     /// Reads unencrypted bytes
@@ -47,7 +56,7 @@ public class TcpRsaCommunicator : TcpCommunicator {
     public new string ReadStr() {
         AssertNotClosed();
         // Hopefully *2 is enough.
-        return rsaKeys.recieve.DecryptStr(ReadRawN(maxStrLen * 2));
+        return util.DecryptStr(ReadRawN(maxStrLen * 2));
     }
 
     /// <summary>
@@ -72,7 +81,9 @@ public class TcpRsaCommunicator : TcpCommunicator {
     /// <param name="data">Bytes to write</param>
     public new void Write(byte[] data) {
         AssertNotClosed();
-        WriteRaw(rsaKeys.send.Encrypt(data));
+        var b = util.Encrypt(data);
+        WriteStr(b.Length.ToString());
+        WriteRaw(b);
     }
 
     /// <summary>
@@ -81,14 +92,14 @@ public class TcpRsaCommunicator : TcpCommunicator {
     /// <param name="data">String to write</param>
     public new void WriteStr(string data) {
         AssertNotClosed();
-        WriteRaw(rsaKeys.send.EncryptStr(data));
+        WriteRaw(util.EncryptStr(data));
     }
 
-    public (RSAUtil recieve, RSAUtil send) GetRSAkeys() {
-        return rsaKeys;
+    public UtilHolder GetKeyUtil() {
+        return util;
     }
 
-    public TcpRsaCommunicator(TcpClient client, string inPemData, string outPemData, Encoding? encoding = null, int maxStrLen = 1024) : base(client, encoding, maxStrLen) {
-        this.rsaKeys = (new RSAUtil(KeyType.Private, inPemData, encoding), new RSAUtil(KeyType.Public, outPemData, encoding));
+    public EncryptedTcpCommunicator(TcpClient client, UtilHolder util, Encoding? encoding = null, int maxStrLen = 1024) : base(client, encoding, maxStrLen) {
+        this.util = util;
     }
 }
