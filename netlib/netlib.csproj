@@ -11,24 +11,24 @@
         <Description>C# Library for various networking purposes</Description>
         <RepositoryUrl>https://github.com/CoolandonRS/netlib</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <Version>2.0.0-beta</Version>
+        <Version>2.0.1</Version>
         <PackageId>CoolandonRS.netlib</PackageId>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
+        <PackageTags>networking</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Update="ServerAuthException.cs">
-        <DependentUpon>ServerException.cs</DependentUpon>
-      </Compile>
-      <Compile Update="ServerConnectionException.cs">
-        <DependentUpon>ServerException.cs</DependentUpon>
-      </Compile>
-      <Compile Update="ServerOperationException.cs">
-        <DependentUpon>ServerException.cs</DependentUpon>
-      </Compile>
+        <Compile Update="ServerAuthException.cs">
+            <DependentUpon>ServerException.cs</DependentUpon>
+        </Compile>
+        <Compile Update="ServerConnectionException.cs">
+            <DependentUpon>ServerException.cs</DependentUpon>
+        </Compile>
+        <Compile Update="ServerOperationException.cs">
+            <DependentUpon>ServerException.cs</DependentUpon>
+        </Compile>
+        <None Include="../README.md" Pack="true" PackagePath="\"/>
+        <PackageReference Include="CoolandonRS.keyring" Version="1.2.0" />
     </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="CoolandonRS.keyring" Version="1.2.0" />
-    </ItemGroup>
-
 </Project>
